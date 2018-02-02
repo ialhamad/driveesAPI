@@ -1,0 +1,31 @@
+type Car {
+	id: Int!
+	name: String!
+	make: String!
+	model: String!
+	make_year: Int!
+	color: String!
+	plate_number: String!
+	created_at: String!
+	updated_at: String!
+}
+
+type Query {
+	cars: [Car!]
+	car(id: Int!): Car
+}
+
+input CarInput {
+	name: String!
+	make: String!
+	model: String!
+	make_year: Int!
+	color: String!
+	plate_number: String!
+}
+
+type Mutation {
+	createCar(input: CarInput): Car
+	updateCar(input: CarInput): Car
+	deleteCar(carId: Int!): Boolean!
+}

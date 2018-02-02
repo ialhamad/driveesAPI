@@ -1,0 +1,25 @@
+type City {
+	id: Int!
+	name: String!
+	state: String!
+	country: String!
+	created_at: String!
+	updated_at: String!
+}
+
+type Query {
+	city(id: Int!): City
+	cities: [City!]
+}
+
+input CityInput {
+	name: String!
+	state: String!
+	country: String!
+}
+
+type Mutation {
+	createCity(input: CityInput): City
+	updateCity(input: CityInput): City
+	deleteCity(carId: Int!): Boolean!
+}

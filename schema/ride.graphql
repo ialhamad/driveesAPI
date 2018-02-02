@@ -1,0 +1,34 @@
+type Ride {
+	id: Int!
+	travel_time: String!
+	seat_offered: Int!
+	seat_price: Float!
+	luggage_size: String!
+	driver: User!
+	car: Car!
+	src_city: City!
+	dest_city: City!
+	created_at: String!
+	updated_at: String!
+}
+
+type Query {
+	rides: [Ride!]
+	ride(id: Int!): Ride
+}
+
+input RideInput {
+	travel_time: String!
+	seat_offered: Int!
+	seat_price: Float!
+	luggage_size: String!
+	user_car_id: Int!
+	src_city_id: Int!
+	dest_city_id: Int!
+}
+
+type Mutation {
+	createRide(input: RideInput): Ride
+	updateRide(input: RideInput): Ride
+	deleteRide(id: Int!): Boolean!
+}

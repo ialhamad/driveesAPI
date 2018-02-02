@@ -1,0 +1,15 @@
+type UserCar {
+	id: Int!
+	user: User!
+	car: Car!
+	created_at: String!
+	updated_at: String!
+}
+
+type Query {
+	userCar(id: Int!): UserCar
+}
+
+type Mutation {
+	createCar(user_id: Int!, car_id: Int!): UserCar
+}

@@ -1,0 +1,5 @@
+type EnrouteCity {
+	id: Int!
+	ride: Ride!
+	city: City!
+}
