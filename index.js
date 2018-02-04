@@ -30,6 +30,8 @@ app.use(
 		schema,
 		context: {
 			db,
+			secret: config.secret,
+			refreshing_secret: config.refreshing_secret,
 		},
 	})
 );

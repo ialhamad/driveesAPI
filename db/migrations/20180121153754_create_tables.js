@@ -34,11 +34,13 @@ exports.up = function(knex, Promise) {
 			t
 				.integer('user_id')
 				.references('id')
-				.inTable('users');
+				.inTable('users')
+				.onDelete('CASCADE');
 			t
 				.integer('car_id')
 				.references('id')
-				.inTable('cars');
+				.inTable('cars')
+				.onDelete('CASCADE');
 
 			t.timestamps(true, true);
 		})
@@ -79,11 +81,13 @@ exports.up = function(knex, Promise) {
 			t
 				.integer('ride_id')
 				.references('id')
-				.inTable('rides');
+				.inTable('rides')
+				.onDelete('CASCADE');
 			t
 				.integer('city_id')
 				.references('id')
-				.inTable('cities');
+				.inTable('cities')
+				.onDelete('CASCADE');
 
 			t.timestamps(true, true);
 		})
@@ -93,16 +97,19 @@ exports.up = function(knex, Promise) {
 			t
 				.integer('requester_id')
 				.references('id')
-				.inTable('users');
+				.inTable('users')
+				.onDelete('CASCADE');
 			t
 				.integer('ride_id')
 				.references('id')
-				.inTable('rides');
+				.inTable('rides')
+				.onDelete('CASCADE');
+
 			t
 				.integer('enroute_city_id')
 				.references('id')
-				.inTable('cities');
-
+				.inTable('cities')
+				.onDelete('CASCADE');
 			t.timestamps(true, true);
 		})
 		.createTable('users_reviews', t => {
@@ -110,7 +117,8 @@ exports.up = function(knex, Promise) {
 			t
 				.integer('user_id')
 				.references('id')
-				.inTable('users');
+				.inTable('users')
+				.onDelete('CASCADE');
 			t.integer('rate');
 			t.string('title');
 			t.string('comment');
