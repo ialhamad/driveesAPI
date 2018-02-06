@@ -18,6 +18,7 @@ type Query {
 type LoginResponse {
 	ok: Boolean!
 	token: String
+	refresh_token: String
 }
 
 input UserInput {

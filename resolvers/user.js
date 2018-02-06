@@ -1,6 +1,4 @@
-const bcrypt = require('bcrypt');
-const util = require('util');
-const jwt = require('jsonwebtoken');
+const { tryLogin } = require('../util/auth');
 
 module.exports = {
 	Query: {
@@ -25,31 +23,8 @@ module.exports = {
 				.then(rows => rows[0]);
 		},
 
-		login: async (parent, { email, password }, { db, secret }) => {
-			const user = await db('users')
-				.select()
-				.where('email', email)
-				.then(rows => rows[0]);
-			if (!user) {
-				throw new Error('No user with that email.');
-			}
-			const valid = await bcrypt.compareSync(password, user.password);
-			if (!valid) {
-				throw new Error('Incorrect password.');
-			}
-			const token = jwt.sign(
-				{
-					user: {
-						id: user.id,
-					},
-				},
-				secret,
-				{ expiresIn: '32m' }
-			);
-			return {
-				ok: true,
-				token,
-			};
+		login: async (parent, { email, password }, { db, secret, refreshSecret }) => {
+			return tryLogin(email, password, db, secret, refreshSecret);
 		},
 
 		updateUser: (parent, { id, input }, { db }) => {
