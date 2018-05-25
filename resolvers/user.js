@@ -1,4 +1,5 @@
-const { tryLogin } = require('../util/auth');
+const { tryLogin } = require('../auth');
+const bcrypt = require('bcrypt');
 
 module.exports = {
 	Query: {
@@ -10,7 +11,17 @@ module.exports = {
 		user: (parent, { id }, { db }) => {
 			return db('users')
 				.select()
-				.where('id', id);
+				.where('id', id)
+				.limit(1);
+		},
+		me: async (parent, args, { db, user }) => {
+			if (user) {
+				return db('users')
+					.select()
+					.where('id', user.id)
+					.limit(1)
+					.then(rows => rows[0]);
+			}
 		},
 	},
 	Mutation: {

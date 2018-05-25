@@ -12,6 +12,7 @@ exports.up = function(knex, Promise) {
 				.notNullable()
 				.unique();
 			t.string('password');
+			t.boolean('is_admin').defaultTo(false);
 
 			t.timestamps(true, true);
 		})

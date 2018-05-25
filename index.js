@@ -5,15 +5,16 @@ const path = require('path');
 const knex = require('knex');
 const cors = require('cors');
 const express = require('express');
+const expressJwt = require('express-jwt');
 const bodyParser = require('body-parser');
 const { fileLoader, mergeTypes, mergeResolvers } = require('merge-graphql-schemas');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
-
+const jwt = require('jsonwebtoken');
 // Local imports
 const dbConfig = require('./knexfile');
 const config = require('./config');
-const { addUser } = require('./util/add_user');
+const { refreshTokens } = require('./auth');
 
 const db = knex(dbConfig[config.env]);
 const app = express();
@@ -26,7 +27,14 @@ const schema = makeExecutableSchema({
 });
 
 app.use(cors('*'));
-app.use(addUser);
+
+app.use(
+	expressJwt({
+		secret: 'secret',
+		credentialsRequired: false,
+		userProperty: 'user',
+	})
+);
 
 app.use(
 	'/graphql',
@@ -37,7 +45,6 @@ app.use(
 			db,
 			secret: config.secret,
 			refreshSecret: config.refreshSecret,
-			user: req.user,
 		},
 	}))
 );
