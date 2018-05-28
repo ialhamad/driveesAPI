@@ -1,4 +1,4 @@
-const jsonwebtoken = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const ـ = require('lodash');
 const bcrypt = require('bcrypt');
 
